@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROYD // Elevated Streetwear & Urban Wear Venezuela</title>
+    
+    <!-- Google Fonts: Syne & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS Engine CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        royd: {
+                            dark: '#181925',
+                            surface: '#1F2132',
+                            card: '#25283B',
+                            gray: '#8D99AE',
+                            light: '#EDF2F4',
+                            red: '#EF233C',
+                            darkred: '#D80032',
+                        }
+                    },
+                    fontFamily: {
+                        syne: ['Syne', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1F2132;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #EF233C;
+            border-radius: 4px;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Lock Scroll when modal open */
+        body.modal-open {
+            overflow: hidden;
+        }
+        /* Mode Light Specific Overrides */
+        html:not(.dark) body {
+            background-color: #F4F6F8;
+            color: #2B2D42;
+        }
+        html:not(.dark) .bg-royd-dark {
+            background-color: #F4F6F8 !important;
+        }
+        html:not(.dark) .bg-royd-surface {
+            background-color: #FFFFFF !important;
+            border-color: #E2E8F0 !important;
+        }
+        html:not(.dark) .bg-royd-card {
+            background-color: #F8FAFC !important;
+            border-color: #E2E8F0 !important;
+        }
+        html:not(.dark) .text-white {
+            color: #1E293B !important;
+        }
+    </style>
+</head>
+<body class="bg-royd-dark text-royd-light min-h-screen flex flex-col relative selection:bg-royd-red selection:text-white">
+
+    <!-- 01. TOP ANNOUNCEMENT BAR CON MULTI-CURRENCY & COUNTDOWN -->
+    <div class="bg-black text-white text-[11px] font-semibold py-2 px-4 fixed top-0 w-full z-50 border-b border-royd-red/30 flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <!-- Multi-Currency Selector -->
+            <select id="currency-select" class="bg-royd-surface border border-royd-gray/40 text-white text-[10px] rounded px-2 py-0.5 font-mono focus:outline-none focus:border-royd-red cursor-pointer">
+                <option value="USD">USD ($)</option>
+                <option value="BS">BS (BCV)</option>
+                <option value="EUR">EUR (€)</option>
+            </select>
+            <span id="exchange-rate-tag" class="hidden sm:inline text-royd-gray font-mono text-[10px]">Tasa BCV: 36.40 BS/USD</span>
+        </div>
+
+        <div class="overflow-hidden whitespace-nowrap max-w-xs sm:max-w-md lg:max-w-xl">
+            <div class="animate-marquee inline-block font-mono text-royd-light">
+                🔥 ENVÍOS GRATIS A NIVEL NACIONAL VÍA MRW / ZOOM EN COMPRAS SUPERIORES A $60 USD • DROP 04: "UNIVOYS COLLEGE"
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3 text-[10px] font-mono">
+            <div class="hidden md:flex items-center space-x-1 text-royd-red">
+                <i class="fa-solid fa-clock"></i>
+                <span>DROP CIERRA EN:</span>
+                <span id="countdown-timer" class="font-bold text-white bg-royd-surface px-1.5 py-0.5 rounded">24:00:00</span>
+            </div>
+            <div class="flex items-center space-x-1 text-emerald-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="hidden md:inline">IA WhatsApp 24/7</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 02. NAVBAR / HEADER PRINCIPAL -->
+    <header class="fixed top-8 w-full z-40 bg-royd-dark/90 backdrop-blur-md border-b border-royd-gray/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo Tipográfico Minimalista ROYD -->
+            <a href="#" class="flex items-center space-x-1 group">
+                <span class="font-syne font-extrabold text-3xl tracking-tighter text-white group-hover:text-royd-red transition-colors">ROYD</span>
+                <span class="w-2 h-2 rounded-full bg-royd-red mb-3"></span>
+            </a>
+
+            <!-- Selector Dinámico de Edad -->
+            <div class="hidden lg:flex items-center bg-royd-surface/80 p-1 rounded-full border border-royd-gray/30 z-10">
+                <span class="text-xs text-royd-gray px-3 font-semibold">EDAD:</span>
+                <button data-age="all" class="btn-age-filter px-3 py-1 text-xs rounded-full bg-royd-red text-white font-bold transition-all cursor-pointer">Todos</button>
+                <button data-age="12-17" class="btn-age-filter px-3 py-1 text-xs rounded-full text-royd-gray hover:text-white transition-all cursor-pointer">12-17</button>
+                <button data-age="18-25" class="btn-age-filter px-3 py-1 text-xs rounded-full text-royd-gray hover:text-white transition-all cursor-pointer">18-25</button>
+                <button data-age="26-35" class="btn-age-filter px-3 py-1 text-xs rounded-full text-royd-gray hover:text-white transition-all cursor-pointer">26-35</button>
+            </div>
+
+            <!-- Input Búsqueda Global con Autocomplete & Debounce -->
+            <div class="relative hidden md:block w-64 lg:w-80">
+                <div class="relative flex items-center">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 text-royd-gray text-xs"></i>
+                    <input type="text" id="search-input" placeholder="Buscar por nombre, tela, estilo..." class="w-full bg-royd-surface border border-royd-gray/30 rounded-full py-2 pl-9 pr-8 text-xs text-white placeholder-royd-gray focus:outline-none focus:border-royd-red transition-all">
+                    <button id="btn-clear-search" class="hidden absolute right-3 text-royd-gray hover:text-white text-xs">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <!-- Histórico / Sugerencias de búsqueda -->
+                <div id="search-suggestions" class="hidden absolute left-0 top-full mt-2 w-full bg-royd-surface border border-royd-gray/30 rounded-2xl shadow-2xl overflow-hidden z-50 text-xs">
+                    <div class="p-2 border-b border-royd-gray/20 font-bold text-[10px] text-royd-gray uppercase">Búsquedas Recientes</div>
+                    <div id="search-suggestions-list" class="divide-y divide-royd-gray/10"></div>
+                </div>
+            </div>
+
+            <!-- Controles Tema, Wishlist, Guía de Tallas & Carrito -->
+            <div class="flex items-center space-x-2 sm:space-x-3 z-10">
+                <button id="btn-open-size-chart" class="hidden sm:flex bg-royd-surface border border-royd-gray/30 hover:border-royd-red text-royd-gray hover:text-white px-3 py-2 rounded-full text-xs font-semibold transition-all items-center space-x-1 cursor-pointer" title="Guía de Tallas">
+                    <i class="fa-solid fa-ruler-horizontal text-royd-red"></i>
+                    <span>Tallas</span>
+                </button>
+
+                <button id="btn-wishlist-toggle" class="relative bg-royd-surface border border-royd-gray/30 hover:border-royd-red text-royd-gray hover:text-white p-2.5 rounded-full transition-all flex items-center justify-center cursor-pointer" title="Favoritos">
+                    <i class="fa-solid fa-heart text-sm text-royd-red"></i>
+                    <span id="wishlist-badge-count" class="absolute -top-1 -right-1 bg-royd-red text-white font-extrabold text-[9px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+
+                <button id="btn-theme-toggle" class="bg-royd-surface border border-royd-gray/30 hover:border-royd-red text-royd-gray hover:text-white p-2.5 rounded-full transition-all flex items-center justify-center cursor-pointer" title="Cambiar Tema Claro / Oscuro">
+                    <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+                </button>
+
+                <button id="btn-mobile-search" class="md:hidden text-royd-gray hover:text-royd-red p-2 cursor-pointer" aria-label="Buscar">
+                    <i class="fa-solid fa-magnifying-glass text-lg"></i>
+                </button>
+
+                <button id="btn-open-cart" class="relative bg-royd-red hover:bg-royd-darkred text-white p-3 rounded-full flex items-center justify-center transition-all shadow-lg shadow-royd-red/20 group cursor-pointer">
+                    <i class="fa-solid fa-bag-shopping text-base group-hover:scale-110 transition-transform"></i>
+                    <span id="cart-badge-count" class="absolute -top-1 -right-1 bg-white text-royd-dark font-extrabold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-royd-dark">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay Búsqueda Móvil -->
+    <div id="mobile-search-bar" class="hidden md:hidden fixed top-28 left-0 w-full px-4 py-3 bg-royd-dark border-b border-royd-gray/30 z-30">
+        <input type="text" id="search-input-mobile" placeholder="Buscar por prenda, corte, material..." class="w-full bg-royd-surface border border-royd-gray/40 rounded-xl py-2 px-4 text-xs text-white placeholder-royd-gray focus:outline-none focus:border-royd-red">
+    </div>
+
+    <!-- Toast Notification Component -->
+    <div id="toast-notification" class="fixed bottom-6 left-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none bg-royd-surface border border-royd-red/50 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-full bg-royd-red/20 text-royd-red flex items-center justify-center">
+            <i id="toast-icon" class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <h5 id="toast-title" class="font-syne font-bold text-xs uppercase">Notificación</h5>
+            <p id="toast-msg" class="text-[11px] text-royd-gray">Acción realizada con éxito</p>
+        </div>
+    </div>
+
+    <!-- POPUP NOTIFICACIÓN DE COMPRA EN TIEMPO REAL (SOCIAL PROOF) -->
+    <div id="social-proof-popup" class="fixed bottom-20 left-6 z-40 transform translate-y-24 opacity-0 transition-all duration-500 pointer-events-none bg-royd-surface/95 backdrop-blur-md border border-royd-gray/30 text-white p-3 rounded-2xl shadow-2xl flex items-center space-x-3 max-w-xs">
+        <img id="proof-img" src="" class="w-10 h-10 object-cover rounded-xl border border-royd-gray/30 flex-shrink-0" alt="Producto">
+        <div class="text-[11px]">
+            <p class="font-bold text-white"><span id="proof-user">Carlos de Caracas</span> <span class="font-normal text-royd-gray">compró hace instantes:</span></p>
+            <p id="proof-item" class="text-royd-red font-semibold truncate">Jean Wide Leg Univoys</p>
+        </div>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="pt-28 flex-1">
+
+        <!-- 03. HERO SECTION -->
+        <section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden border-b border-royd-gray/20 bg-gradient-to-br from-royd-dark via-royd-surface to-royd-dark transition-colors duration-500">
+            <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-royd-red/20 rounded-full blur-[120px]"></div>
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-royd-darkred/15 rounded-full blur-[100px]"></div>
+            </div>
+
+            <div class="relative z-10 max-w-5xl mx-auto px-4 text-center space-y-6 py-12">
+                <div class="inline-flex items-center space-x-2 bg-royd-red/10 border border-royd-red/40 backdrop-blur-md px-4 py-1.5 rounded-full">
+                    <span class="w-2 h-2 rounded-full bg-royd-red animate-pulse"></span>
+                    <span class="text-xs font-mono font-bold uppercase text-white tracking-widest">NUEVA COLECCIÓN // UNIVOYS DROP 04</span>
+                </div>
+
+                <h1 class="font-syne font-extrabold text-4xl sm:text-6xl md:text-7xl text-white uppercase tracking-tight leading-none drop-shadow-2xl">
+                    CALIDAD SOBRE <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-royd-red via-red-400 to-white">CANTIDAD.</span>
+                </h1>
+
+                <p class="max-w-2xl mx-auto text-sm sm:text-base text-royd-gray font-medium leading-relaxed">
+                    Streetwear elevado y telas pesadas de máxima durabilidad en Venezuela. Confección en Algodón Heavyweight y Denim 14oz.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 z-20">
+                    <a href="#catalogo" class="w-full sm:w-auto px-8 py-4 bg-royd-red hover:bg-royd-darkred text-white font-syne font-bold text-sm tracking-wider uppercase rounded-xl transition-all shadow-xl shadow-royd-red/30 flex items-center justify-center space-x-2 group">
+                        <span>EXPLORAR COLECCIÓN</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+
+                    <a href="https://wa.me/584147420458?text=Hola%20ROYD!%20Quisiera%20pedir%20asesor%C3%ADa%20para%20comprar." target="_blank" class="w-full sm:w-auto px-8 py-4 bg-emerald-600/90 hover:bg-emerald-600 text-white font-syne font-bold text-sm tracking-wider uppercase rounded-xl border border-emerald-500/40 backdrop-blur-md transition-all shadow-lg flex items-center justify-center space-x-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>COMPRAR POR WHATSAPP</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- SECCIÓN DE CATÁLOGO & FILTROS AVANZADOS -->
+        <section id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+            
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-royd-gray/20 pb-6">
+                <div>
+                    <h2 class="font-syne font-extrabold text-2xl sm:text-3xl text-white uppercase">Catálogo de Productos</h2>
+                    <p id="product-count-label" class="text-xs text-royd-gray mt-1">Cargando catálogo de productos...</p>
+                </div>
+
+                <!-- SELECTOR DE GÉNERO -->
+                <div class="flex items-center bg-royd-surface p-1 rounded-2xl border border-royd-gray/30 self-start md:self-auto z-10">
+                    <button data-gender="all" class="btn-gender-filter px-5 py-2 text-xs font-bold rounded-xl bg-royd-red text-white transition-all shadow-md cursor-pointer">Todos</button>
+                    <button data-gender="hombres" class="btn-gender-filter px-5 py-2 text-xs font-bold rounded-xl text-royd-gray hover:text-white transition-all cursor-pointer">Hombres</button>
+                    <button data-gender="mujeres" class="btn-gender-filter px-5 py-2 text-xs font-bold rounded-xl text-royd-gray hover:text-white transition-all cursor-pointer">Mujeres</button>
+                </div>
+            </div>
+
+            <!-- FILTROS AVANZADOS MULTI-NIVEL -->
+            <div class="space-y-4 bg-royd-surface/40 p-4 rounded-2xl border border-royd-gray/20">
+                
+                <!-- BARRA 1: CATEGORÍAS -->
+                <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1" id="category-bar-1">
+                    <span class="text-xs font-bold font-mono text-royd-gray px-1 uppercase">Prenda:</span>
+                    <button data-cat="all" class="btn-cat-filter whitespace-nowrap px-4 py-1.5 text-xs font-semibold rounded-xl bg-royd-red text-white transition-all cursor-pointer">Todas</button>
+                    <button data-cat="Pantalones" class="btn-cat-filter whitespace-nowrap px-4 py-1.5 text-xs font-semibold rounded-xl bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">Pantalones / Cargos</button>
+                    <button data-cat="Shorts/Jorts" class="btn-cat-filter whitespace-nowrap px-4 py-1.5 text-xs font-semibold rounded-xl bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">Shorts / Jorts</button>
+                    <button data-cat="Camisas" class="btn-cat-filter whitespace-nowrap px-4 py-1.5 text-xs font-semibold rounded-xl bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">Camisas / Tees</button>
+                    <button data-cat="Hoodies" class="btn-cat-filter whitespace-nowrap px-4 py-1.5 text-xs font-semibold rounded-xl bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">Hoodies</button>
+                    <button data-cat="Gorras" class="btn-cat-filter whitespace-nowrap px-4 py-1.5 text-xs font-semibold rounded-xl bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">Gorras</button>
+                </div>
+
+                <!-- BARRA 2: ESTILOS & CONTROLES SECUNDARIOS -->
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-2 border-t border-royd-gray/10">
+                    <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1" id="category-bar-2">
+                        <span class="text-xs font-bold font-mono text-royd-gray px-1 uppercase">Estilo:</span>
+                        <button data-style="all" class="btn-style-filter whitespace-nowrap px-3 py-1 text-[11px] font-semibold rounded-lg bg-royd-surface text-white border border-royd-red/40 transition-all cursor-pointer">Todos</button>
+                        <button data-style="Streetwear" class="btn-style-filter whitespace-nowrap px-3 py-1 text-[11px] font-semibold rounded-lg bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">Streetwear</button>
+                        <button data-style="Univoys" class="btn-style-filter whitespace-nowrap px-3 py-1 text-[11px] font-semibold rounded-lg bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">🎓 Univoys</button>
+                        <button data-style="Minimalist" class="btn-style-filter whitespace-nowrap px-3 py-1 text-[11px] font-semibold rounded-lg bg-royd-surface text-royd-gray hover:text-white border border-royd-gray/20 transition-all cursor-pointer">Minimalist</button>
+                    </div>
+
+                    <!-- ORDENAMIENTO & FILTRO DE PRECIO Y TALLA -->
+                    <div class="flex flex-wrap items-center gap-3 text-xs">
+                        <!-- Filtro de Talla -->
+                        <div class="flex items-center space-x-1">
+                            <span class="text-royd-gray font-mono">Talla:</span>
+                            <select id="size-filter" class="bg-royd-surface border border-royd-gray/30 text-white rounded-lg px-2 py-1 font-mono text-xs focus:outline-none focus:border-royd-red">
+                                <option value="all">Todas</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="Ajustable">Ajustable</option>
+                            </select>
+                        </div>
+
+                        <!-- Ordenamiento -->
+                        <div class="flex items-center space-x-1">
+                            <span class="text-royd-gray font-mono">Ordenar:</span>
+                            <select id="sort-select" class="bg-royd-surface border border-royd-gray/30 text-white rounded-lg px-2 py-1 font-mono text-xs focus:outline-none focus:border-royd-red">
+                                <option value="featured">Destacados</option>
+                                <option value="price-low">Precio: Menor a Mayor</option>
+                                <option value="price-high">Precio: Mayor a Menor</option>
+                                <option value="name">Nombre (A-Z)</option>
+                            </select>
+                        </div>
+
+                        <!-- Slider de Precio Máximo -->
+                        <div class="flex items-center space-x-2 bg-royd-surface px-3 py-1 rounded-lg border border-royd-gray/30">
+                            <span class="text-royd-gray font-mono text-[11px]">Máx: $<span id="price-limit-val">100</span></span>
+                            <input type="range" id="price-slider" min="15" max="100" value="100" class="w-20 accent-royd-red cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen de Filtros Activos con Chips Removibles -->
+                <div id="active-filters-summary" class="hidden flex flex-wrap items-center justify-between bg-royd-red/10 border border-royd-red/30 p-2.5 rounded-xl text-xs gap-2">
+                    <div class="flex items-center space-x-2 flex-wrap" id="active-filter-chips">
+                        <span class="text-royd-red font-bold font-mono">Filtros:</span>
+                    </div>
+                    <button id="btn-reset-filters" class="text-royd-red hover:underline font-bold text-[11px] cursor-pointer">Limpiar todos</button>
+                </div>
+            </div>
+
+            <!-- GRID DINÁMICO DE PRODUCTOS -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4">
+                <!-- Inyectado por Javascript -->
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE VISTOS RECIENTEMENTE -->
+        <section id="recently-viewed-section" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-royd-gray/20">
+            <h3 class="font-syne font-bold text-lg text-white uppercase mb-4 flex items-center space-x-2">
+                <i class="fa-solid fa-clock-rotate-left text-royd-red"></i>
+                <span>Vistos Recientemente</span>
+            </h3>
+            <div id="recently-viewed-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4"></div>
+        </section>
+
+    </main>
+
+    <!-- MODAL GUÍA DE TALLAS & FIT FINDER -->
+    <div id="size-chart-modal" class="fixed inset-0 z-50 hidden opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+        <div id="size-chart-overlay" class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
+        <div class="relative bg-royd-dark border border-royd-gray/30 rounded-3xl max-w-xl w-full p-6 space-y-6 overflow-hidden z-10 shadow-2xl">
+            <button id="btn-close-size-chart" class="absolute top-4 right-4 text-royd-gray hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="space-y-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-ruler-combined text-royd-red text-xl"></i>
+                    <h3 class="font-syne font-bold text-xl text-white uppercase">Guía de Tallas & Fit Finder</h3>
+                </div>
+
+                <!-- Calculadora de Talla Recomendada -->
+                <div class="bg-royd-surface p-4 rounded-2xl border border-royd-gray/30 space-y-3">
+                    <h4 class="text-xs font-bold text-white uppercase font-mono">Calcula tu Talla Ideal:</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[10px] text-royd-gray block font-mono">Altura (cm):</label>
+                            <input type="number" id="fit-height" placeholder="Ej: 178" class="w-full bg-royd-card border border-royd-gray/30 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-royd-red">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-royd-gray block font-mono">Peso (kg):</label>
+                            <input type="number" id="fit-weight" placeholder="Ej: 75" class="w-full bg-royd-card border border-royd-gray/30 rounded-lg p-2 text-xs text-white focus:outline-none focus:border-royd-red">
+                        </div>
+                    </div>
+                    <button id="btn-calculate-fit" class="w-full bg-royd-red hover:bg-royd-darkred text-white text-xs font-bold py-2 rounded-xl transition-all cursor-pointer">Calcular Talla Sugerida</button>
+                    <div id="fit-result" class="hidden text-center text-xs font-bold text-emerald-400 bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/30"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW / FULLSCREEN PDP MODAL AVANZADO -->
+    <div id="pdp-modal" class="fixed inset-0 z-50 hidden opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-0 md:p-6">
+        <div id="pdp-overlay" class="absolute inset-0 bg-black/85 backdrop-blur-md"></div>
+        <div class="relative bg-royd-dark border border-royd-gray/30 rounded-none md:rounded-3xl w-full max-w-6xl h-full md:h-[92vh] p-6 space-y-8 overflow-y-auto z-10 shadow-2xl transform scale-95 transition-transform duration-300" id="pdp-container">
+            <button id="btn-close-pdp" class="sticky top-0 float-right bg-royd-surface text-royd-gray hover:text-white w-10 h-10 rounded-full flex items-center justify-center cursor-pointer border border-royd-gray/30 z-30 shadow-lg">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="pdp-content" class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2"></div>
+
+            <!-- SECCIÓN "PODRÍA GUSTARTE ESTO" ESTILO SHEIN -->
+            <div class="border-t border-royd-gray/20 pt-8 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h4 class="font-syne font-extrabold text-xl text-white uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-royd-red"></i>
+                        <span>Podría gustarte esto</span>
+                    </h4>
+                    <span class="text-xs text-royd-gray font-mono">Recomendados para ti</span>
+                </div>
+                <div id="pdp-recommendations-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <!-- Inyectado dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAWER CART MODAL AVANZADO -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-300">
+        <div id="cart-overlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+        <div id="cart-drawer-panel" class="absolute right-0 top-0 h-full w-full max-w-md bg-royd-dark border-l border-royd-gray/30 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col justify-between pointer-events-auto p-6 z-10">
+            <div>
+                <div class="flex items-center justify-between border-b border-royd-gray/20 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-bag-shopping text-royd-red"></i>
+                        <h3 class="font-syne font-bold text-lg text-white uppercase">Tu Carrito ROYD</h3>
+                    </div>
+                    <button id="btn-close-cart" class="text-royd-gray hover:text-white p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Barra de Progreso Envío Gratis -->
+                <div class="mt-4 bg-royd-surface p-3 rounded-xl border border-royd-gray/20 space-y-1.5">
+                    <div class="flex justify-between text-[11px] font-mono">
+                        <span id="free-shipping-text" class="text-royd-gray">Envío Gratis (+ $60 USD)</span>
+                        <span id="free-shipping-val" class="font-bold text-white">$0 / $60</span>
+                    </div>
+                    <div class="w-full bg-royd-card h-2 rounded-full overflow-hidden">
+                        <div id="free-shipping-bar" class="bg-gradient-to-r from-royd-red to-emerald-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- Items del Carrito -->
+                <div id="cart-items-container" class="mt-4 space-y-3 max-h-[45vh] overflow-y-auto pr-1"></div>
+            </div>
+
+            <div class="border-t border-royd-gray/20 pt-4 space-y-3">
+                <!-- Desglose de Método de Pago y Envío -->
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                        <label class="text-[10px] text-royd-gray block font-mono">Método de Pago:</label>
+                        <select id="cart-payment-method" class="w-full bg-royd-surface border border-royd-gray/30 text-white rounded-lg p-1.5 font-mono text-[11px] focus:outline-none">
+                            <option value="Zelle">Zelle</option>
+                            <option value="Pago Móvil">Pago Móvil</option>
+                            <option value="Efectivo USD">Efectivo USD</option>
+                            <option value="Binance Pay">Binance Pay</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-royd-gray block font-mono">Empresa de Envío:</label>
+                        <select id="cart-shipping-method" class="w-full bg-royd-surface border border-royd-gray/30 text-white rounded-lg p-1.5 font-mono text-[11px] focus:outline-none">
+                            <option value="MRW">MRW Nacional</option>
+                            <option value="ZOOM">ZOOM Nacional</option>
+                            <option value="Pick-up">Retiro Personal</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between font-mono pt-2">
+                    <span class="text-xs text-royd-gray">TOTAL ESTIMADO:</span>
+                    <span id="cart-total-display" class="text-2xl font-bold text-white">$0.00 USD</span>
+                </div>
+
+                <button id="btn-checkout-whatsapp" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>FINALIZAR POR WHATSAPP</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WIDGETS FLOTANTES -->
+    <a href="https://wa.me/584147420458" target="_blank" class="fixed bottom-6 right-6 z-40 bg-emerald-500 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center group" title="Agente IA Activo 24/7">
+        <i class="fa-brands fa-whatsapp text-2xl"></i>
+        <span class="absolute right-full mr-3 bg-royd-surface text-white text-[11px] px-3 py-1 rounded-lg border border-royd-gray/30 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">Agente IA activo</span>
+    </a>
+
+    <!-- SCRIPT PRINCIPAL DE NAVEGACIÓN Y MECÁNICAS E-COMMERCE -->
+    <script>
+        // CONFIGURACIÓN DE TASAS DE CAMBIO
+        const EXCHANGE_RATES = {
+            USD: 1.0,
+            BS: 36.40,
+            EUR: 0.92
+        };
+
+        // INVENTARIO ACTUALIZADO CON TUS IMÁGENES EXACTAS DE GOOGLE DRIVE Y PRENDA GORRA
+        const sampleProducts = [
+            {
+                id: 'univoys-jean-01',
+                name: 'Jean Wide Leg Univoys College',
+                category: 'Pantalones',
+                style: 'Univoys',
+                gender: 'hombres',
+                age: '18-25',
+                price: 45,
+                sizes: ['S', 'M', 'L', 'XL'],
+                stock: true,
+                fit: 'Loose / Wide Leg',
+                primaryColor: { name: 'Azul Denim Vintage', hex: '#3B5998' },
+                colorVariants: [
+                    { name: 'Azul Denim Vintage', hex: '#3B5998', image: 'https://static.bershka.net/assets/public/be3d/c83e/a7b643b19afd/6930d8048a7a/01308231428-a4o/01308231428-a4o.jpg?ts=1770732766975&w=850&f=auto' },
+                    { name: 'Negro Washed', hex: '#222222', image: 'https://static.bershka.net/assets/public/be3d/c83e/a7b643b19afd/6930d8048a7a/01308231428-a4o/01308231428-a4o.jpg?ts=1770732766975&w=850&f=auto' },
+                    { name: 'Gris Grafito', hex: '#4A4E69', image: 'https://static.bershka.net/assets/public/be3d/c83e/a7b643b19afd/6930d8048a7a/01308231428-a4o/01308231428-a4o.jpg?ts=1770732766975&w=850&f=auto' }
+                ],
+                image: 'https://static.bershka.net/assets/public/be3d/c83e/a7b643b19afd/6930d8048a7a/01308231428-a4o/01308231428-a4o.jpg?ts=1770732766975&w=850&f=auto',
+                description: 'Jean de silueta holgada Wide Leg de la colección cápsula Univoys (University Campus Drop). Confeccionado en denim pesado de 14oz con lavado vintage sutil y costuras reinforced.',
+                materials: '100% Algodón Rígido Heavyweight (14 oz)',
+                specs: [
+                    'Corte Wide Leg de caída recta urbana',
+                    'Remaches metálicos de alta resistencia reforzados',
+                    'Lavado sutil de proceso eco-wash de bajo impacto',
+                    'Cinco bolsillos funcionales profundos'
+                ]
+            },
+            {
+                id: 'univoys-drop-02',
+                name: 'Camiseta Univoys Varsity Oversized',
+                category: 'Camisas',
+                style: 'Univoys',
+                gender: 'hombres',
+                age: '18-25',
+                price: 29.90,
+                sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+                stock: true,
+                fit: 'Oversized / Boxy Fit',
+                primaryColor: { name: 'Verde Oliva Forest', hex: '#2D6A4F' },
+                colorVariants: [
+                    { name: 'Verde Oliva Forest', hex: '#2D6A4F', image: 'https://lh3.googleusercontent.com/d/1XrBgHTxi1V44ytprlpPJfxiREESOsoQ-' },
+                    { name: 'Negro Matte', hex: '#1A1A1A', image: 'https://lh3.googleusercontent.com/d/1XrBgHTxi1V44ytprlpPJfxiREESOsoQ-' },
+                    { name: 'Blanco Crudo', hex: '#F4F1DE', image: 'https://lh3.googleusercontent.com/d/1XrBgHTxi1V44ytprlpPJfxiREESOsoQ-' }
+                ],
+                image: 'https://lh3.googleusercontent.com/d/1XrBgHTxi1V44ytprlpPJfxiREESOsoQ-',
+                description: 'Tee técnica de la colección Univoys con gráfico retro varsity campus. Confeccionada con algodón denso de alta durabilidad (240g+), caída suave de hombros caídos y grabado de textura duradera.',
+                materials: '100% Algodón Heavyweight Peinado (240 GSM)',
+                specs: [
+                    'Cuello acanalado de 1.25 pulgadas anti-deformación',
+                    'Estampado serigráfico de alta densidad',
+                    'Costuras dobles reinforced en hombro y manga',
+                    'Corte cuadrado estructurado Boxy Fit'
+                ]
+            },
+            {
+                id: 'univoys-cap-03',
+                name: 'Gorra Univoys Essential Cap',
+                category: 'Gorras',
+                style: 'Univoys',
+                gender: 'hombres',
+                age: '18-25',
+                price: 19.90,
+                sizes: ['Ajustable', 'Única'],
+                stock: true,
+                fit: 'Adjustable Snapback / Curved Visor',
+                primaryColor: { name: 'Negro Carbón', hex: '#111111' },
+                colorVariants: [
+                    { name: 'Negro Carbón', hex: '#111111', image: 'https://lh3.googleusercontent.com/d/1Y8--aoBwPpw68uf-Y5Z4Z3UN_Ly_O3Y5' },
+                    { name: 'Azul Marino Varsity', hex: '#0B2545', image: 'https://lh3.googleusercontent.com/d/1Y8--aoBwPpw68uf-Y5Z4Z3UN_Ly_O3Y5' },
+                    { name: 'Verde Botella', hex: '#1B4332', image: 'https://lh3.googleusercontent.com/d/1Y8--aoBwPpw68uf-Y5Z4Z3UN_Ly_O3Y5' }
+                ],
+                image: 'https://lh3.googleusercontent.com/d/1Y8--aoBwPpw68uf-Y5Z4Z3UN_Ly_O3Y5',
+                description: 'Gorra de visera curva perteneciente a la colección Univoys. Confeccionada en sarga de algodón denso de alta durabilidad con bordado universitario frontal en relieve 3D.',
+                materials: '100% Sarga de Algodón Heavyweight Twill',
+                specs: [
+                    'Broche regulable metálico grabado con logo ROYD',
+                    'Bordado frontal frontal 3D de alta densidad',
+                    'Banda interna absorbente anti-sudor',
+                    'Estructura frontal rígida de 6 paneles'
+                ]
+            },
+            {
+                id: 'univoys-drop-05',
+                name: 'Camiseta Univoys Arch Logo Tee',
+                category: 'Camisas',
+                style: 'Univoys',
+                gender: 'hombres',
+                age: '18-25',
+                price: 24.90,
+                sizes: ['M', 'L', 'XL'],
+                stock: true,
+                fit: 'Boxy Fit',
+                primaryColor: { name: 'Verde Botella / Varsity', hex: '#1B4332' },
+                colorVariants: [
+                    { name: 'Verde Botella / Varsity', hex: '#1B4332', image: 'https://lh3.googleusercontent.com/d/1Sca1ngdZq40q3iiyh5hwjKdgG5mjZaE-' },
+                    { name: 'Negro Matte', hex: '#111111', image: 'https://lh3.googleusercontent.com/d/1Sca1ngdZq40q3iiyh5hwjKdgG5mjZaE-' }
+                ],
+                image: 'https://lh3.googleusercontent.com/d/1Sca1ngdZq40q3iiyh5hwjKdgG5mjZaE-',
+                description: 'Tee de corte cuadrado con tipografía universitaria en arco. Diseñada para un uso diario resistente manteniendo frescura y estructura después de múltiples lavados.',
+                materials: '100% Algodón Peinado Heavyweight (220 GSM)',
+                specs: [
+                    'Arco universitario serigrafiado al frente',
+                    'Corte drop-shoulder (hombros caídos)',
+                    'Etiqueta tejida oficial ROYD en dobladillo inferior'
+                ]
+            },
+            {
+                id: 'univoys-drop-04',
+                name: 'Jorts Univoys Athletic Heritage',
+                category: 'Shorts/Jorts',
+                style: 'Univoys',
+                gender: 'hombres',
+                age: '18-25',
+                price: 39.90,
+                sizes: ['S', 'M', 'L'],
+                stock: true,
+                fit: 'Baggy / Oversized Fit',
+                primaryColor: { name: 'Azul Denim Desgastado', hex: '#4682B4' },
+                colorVariants: [
+                    { name: 'Azul Denim Desgastado', hex: '#4682B4', image: 'https://lh3.googleusercontent.com/d/19sim6-w5p-HzD2f5naK_j-Klcnxsk2KH' },
+                    { name: 'Negro Lavado Acid', hex: '#2B2D42', image: 'https://lh3.googleusercontent.com/d/19sim6-w5p-HzD2f5naK_j-Klcnxsk2KH' }
+                ],
+                image: 'https://lh3.googleusercontent.com/d/19sim6-w5p-HzD2f5naK_j-Klcnxsk2KH',
+                description: 'Jorts de la colección Univoys. Cuenta con silueta holgada y bolsillos reforzados, perfecto para el look campus de temporada.',
+                materials: '100% Denim Heavyweight (14 oz)',
+                specs: [
+                    'Largo por debajo de la rodilla estilo Skater/Baggy',
+                    'Costuras contrastantes reforzadas',
+                    'Pretina con trabillas anchas para cinturón'
+                ]
+            },
+            {
+                id: 'univoys-drop-06',
+                name: 'Jorts Univoys Varsity Edition',
+                category: 'Shorts/Jorts',
+                style: 'Univoys',
+                gender: 'hombres',
+                age: '18-25',
+                price: 34.90,
+                sizes: ['M', 'L', 'XL'],
+                stock: true,
+                fit: 'Relaxed Oversized',
+                primaryColor: { name: 'Denim Azul Indigo', hex: '#1D3557' },
+                colorVariants: [
+                    { name: 'Denim Azul Indigo', hex: '#1D3557', image: 'https://lh3.googleusercontent.com/d/19DpirqTGnN6nbpK4ZQjD6IFFhd0Ml0__' }
+                ],
+                image: 'https://lh3.googleusercontent.com/d/19DpirqTGnN6nbpK4ZQjD6IFFhd0Ml0__',
+                description: 'Jorts clásicos universitarios con caída por debajo de la rodilla y confección en mezclilla pesada.',
+                materials: '100% Algodón Denim Rígido (14 oz)',
+                specs: [
+                    'Silueta universitaria oversized holgada',
+                    'Botonadura de metal duradero grabada',
+                    'Resistencia máxima al desgaste urbano'
+                ]
+            }
+        ];
+
+        // GESTIÓN DEL ESTADO GLOBAL CON PERSISTENCIA
+        let state = {
+            products: sampleProducts,
+            cart: JSON.parse(localStorage.getItem('royd_cart')) || [],
+            wishlist: JSON.parse(localStorage.getItem('royd_wishlist')) || [],
+            recentSearches: JSON.parse(localStorage.getItem('royd_searches')) || [],
+            recentlyViewed: JSON.parse(localStorage.getItem('royd_viewed')) || [],
+            currency: 'USD',
+            searchQuery: '',
+            selectedSizeFilter: 'all',
+            selectedSort: 'featured',
+            priceLimit: 100,
+            filters: {
+                category: 'all',
+                style: 'all',
+                gender: 'all',
+                age: 'all'
+            }
+        };
+
+        // GUARDAR ESTADO EN LOCALSTORAGE
+        function saveState() {
+            localStorage.setItem('royd_cart', JSON.stringify(state.cart));
+            localStorage.setItem('royd_wishlist', JSON.stringify(state.wishlist));
+            localStorage.setItem('royd_searches', JSON.stringify(state.recentSearches));
+            localStorage.setItem('royd_viewed', JSON.stringify(state.recentlyViewed));
+        }
+
+        // FORMATO DE MONEDA CON CONVERSIÓN
+        function formatPrice(amountUSD) {
+            const rate = EXCHANGE_RATES[state.currency] || 1;
+            const converted = amountUSD * rate;
+            if (state.currency === 'BS') return `${converted.toFixed(2)} BS`;
+            if (state.currency === 'EUR') return `€${converted.toFixed(2)}`;
+            return `$${converted.toFixed(2)} USD`;
+        }
+
+        // DEBOUNCE UTILITY
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        // NOTIFICACIONES TOAST
+        window.showToast = function(title, msg, iconClass = "fa-solid fa-check") {
+            const toast = document.getElementById('toast-notification');
+            const toastTitle = document.getElementById('toast-title');
+            const toastMsg = document.getElementById('toast-msg');
+            const toastIcon = document.getElementById('toast-icon');
+
+            if (!toast) return;
+            if (toastTitle) toastTitle.innerText = title;
+            if (toastMsg) toastMsg.innerText = msg;
+            if (toastIcon) toastIcon.className = iconClass;
+
+            toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        };
+
+        // NOTIFICACIONES SOCIAL PROOF AUTOMÁTICAS
+        function initSocialProof() {
+            const names = ['Carlos de Caracas', 'Andrés de San Cristóbal', 'Mariana de Valencia', 'Gabriel de Maracaibo'];
+            setInterval(() => {
+                const popup = document.getElementById('social-proof-popup');
+                if (!popup) return;
+                const randomProd = state.products[Math.floor(Math.random() * state.products.length)];
+                const randomUser = names[Math.floor(Math.random() * names.length)];
+                
+                document.getElementById('proof-user').innerText = randomUser;
+                document.getElementById('proof-item').innerText = randomProd.name;
+                document.getElementById('proof-img').src = randomProd.image;
+
+                popup.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    popup.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+                }, 4000);
+            }, 18000);
+        }
+
+        // RENDERIZADO DEL CATÁLOGO DE PRODUCTOS
+        function renderProducts() {
+            const container = document.getElementById('product-grid');
+            if (!container) return;
+
+            let filtered = state.products.filter(p => {
+                if (state.filters.gender !== 'all' && p.gender !== state.filters.gender) return false;
+                if (state.filters.category !== 'all' && p.category !== state.filters.category) return false;
+                if (state.filters.style !== 'all' && p.style !== state.filters.style) return false;
+                if (state.filters.age !== 'all' && p.age && p.age !== state.filters.age) return false;
+                if (state.selectedSizeFilter !== 'all' && !p.sizes.includes(state.selectedSizeFilter)) return false;
+                if (p.price > state.priceLimit) return false;
+                if (state.searchQuery.trim() !== '') {
+                    const q = state.searchQuery.toLowerCase();
+                    return p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.style.toLowerCase().includes(q) || p.materials.toLowerCase().includes(q);
+                }
+                return true;
+            });
+
+            if (state.selectedSort === 'price-low') filtered.sort((a,b) => a.price - b.price);
+            if (state.selectedSort === 'price-high') filtered.sort((a,b) => b.price - a.price);
+            if (state.selectedSort === 'name') filtered.sort((a,b) => a.name.localeCompare(b.name));
+
+            const countLabel = document.getElementById('product-count-label');
+            if (countLabel) countLabel.innerText = `Mostrando ${filtered.length} de ${state.products.length} prendas disponibles`;
+
+            const summary = document.getElementById('active-filters-summary');
+            const chipsContainer = document.getElementById('active-filter-chips');
+            if (summary && chipsContainer) {
+                chipsContainer.innerHTML = '<span class="text-royd-red font-bold font-mono">Filtros Activos:</span>';
+                let hasFilters = false;
+
+                if (state.filters.gender !== 'all') { hasFilters = true; chipsContainer.appendChild(createChip(`Género: ${state.filters.gender}`, () => { state.filters.gender = 'all'; renderProducts(); })); }
+                if (state.filters.category !== 'all') { hasFilters = true; chipsContainer.appendChild(createChip(`Prenda: ${state.filters.category}`, () => { state.filters.category = 'all'; renderProducts(); })); }
+                if (state.filters.style !== 'all') { hasFilters = true; chipsContainer.appendChild(createChip(`Estilo: ${state.filters.style}`, () => { state.filters.style = 'all'; renderProducts(); })); }
+                if (state.selectedSizeFilter !== 'all') { hasFilters = true; chipsContainer.appendChild(createChip(`Talla: ${state.selectedSizeFilter}`, () => { state.selectedSizeFilter = 'all'; document.getElementById('size-filter').value='all'; renderProducts(); })); }
+
+                if (hasFilters) summary.classList.remove('hidden');
+                else summary.classList.add('hidden');
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-16 text-center space-y-3 bg-royd-surface/50 rounded-2xl border border-royd-gray/20">
+                        <i class="fa-solid fa-shirt text-4xl text-royd-gray"></i>
+                        <h3 class="font-syne text-lg font-bold text-white uppercase">No hay prendas disponibles</h3>
+                        <p class="text-xs text-royd-gray">Prueba ajustando los filtros o el rango de precio.</p>
+                        <button onclick="window.resetFilters()" class="mt-2 bg-royd-red text-white text-xs px-4 py-2 rounded-xl font-bold hover:bg-royd-darkred transition-all cursor-pointer">Restablecer Filtros</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(p => {
+                const isFav = state.wishlist.includes(p.id);
+                return `
+                <div class="product-card bg-royd-surface rounded-2xl border border-royd-gray/30 overflow-hidden flex flex-col group hover:border-royd-red transition-all shadow-lg relative">
+                    <div class="relative h-72 overflow-hidden bg-royd-dark cursor-pointer" onclick="window.openPDP('${p.id}')">
+                        <img id="card-img-${p.id}" src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" onerror="this.src='https://placehold.co/600x800/2B2D42/EDF2F4?text=ROYD+VE'">
+                        <div class="absolute top-3 left-3 flex flex-col gap-1 z-10">
+                            <span class="bg-royd-red text-white font-extrabold text-[10px] uppercase px-2 py-0.5 rounded shadow">${state.currency}</span>
+                            <span class="bg-black/70 backdrop-blur-md text-white font-mono text-[10px] uppercase px-2 py-0.5 rounded border border-white/10">${p.gender}</span>
+                        </div>
+                        <span class="absolute top-3 right-3 bg-royd-dark/80 backdrop-blur-md text-royd-gray text-[10px] font-bold px-2 py-0.5 rounded border border-royd-gray/30 z-10">${p.fit}</span>
+                    </div>
+
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div>
+                            <div class="flex justify-between items-center text-[10px] font-mono text-royd-gray uppercase tracking-wider">
+                                <span>${p.category} // ${p.style}</span>
+                                <button onclick="window.toggleWishlist('${p.id}')" class="text-royd-gray hover:text-royd-red p-1 cursor-pointer">
+                                    <i class="fa-solid fa-heart ${isFav ? 'text-royd-red' : ''}"></i>
+                                </button>
+                            </div>
+                            <h3 onclick="window.openPDP('${p.id}')" class="font-syne font-bold text-white text-base group-hover:text-royd-red transition-colors cursor-pointer mt-1 truncate">${p.name}</h3>
+                        </div>
+
+                        <!-- Selector Visual de Variantes de Color -->
+                        <div class="space-y-1">
+                            <div class="flex items-center justify-between text-[10px] font-mono text-royd-gray">
+                                <span>Colores (${p.colorVariants.length}):</span>
+                                <span class="font-bold text-white truncate max-w-[110px]" id="color-label-${p.id}">${p.primaryColor.name}</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 pt-0.5">
+                                ${p.colorVariants.map((col, idx) => `
+                                    <button 
+                                        onclick="window.changeCardColor('${p.id}', '${col.name}', '${col.hex}', '${col.image}')" 
+                                        class="w-4 h-4 rounded-full border ${idx === 0 ? 'border-royd-red scale-110' : 'border-white/30'} hover:scale-125 transition-all cursor-pointer shadow-sm" 
+                                        style="background-color: ${col.hex};" 
+                                        title="${col.name}">
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Selector de Tallas Rápido -->
+                        <div class="space-y-1">
+                            <span class="text-[10px] text-royd-gray font-mono block">Talla rápida:</span>
+                            <div class="flex gap-1 flex-wrap">
+                                ${p.sizes.map(sz => `
+                                    <button onclick="window.addToCartWithDetails('${p.id}', '${sz}', '${p.primaryColor.name}')" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-royd-card border border-royd-gray/30 hover:border-royd-red hover:text-royd-red transition-all cursor-pointer">${sz}</button>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2 border-t border-royd-gray/20">
+                            <div>
+                                <span class="text-[10px] text-royd-gray block font-mono">Precio</span>
+                                <span class="font-mono font-extrabold text-lg text-white">${formatPrice(p.price)}</span>
+                            </div>
+
+                            <button onclick="window.openPDP('${p.id}')" class="bg-royd-surface border border-royd-gray/30 hover:border-royd-red text-white p-2.5 rounded-xl transition-all shadow-md flex items-center justify-center cursor-pointer">
+                                <i class="fa-solid fa-eye text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        // CHIP HELPER
+        function createChip(text, onRemove) {
+            const chip = document.createElement('span');
+            chip.className = "inline-flex items-center bg-royd-surface text-white text-[11px] px-2.5 py-0.5 rounded-lg border border-royd-gray/30 font-mono space-x-1";
+            chip.innerHTML = `<span>${text}</span><i class="fa-solid fa-xmark text-royd-red cursor-pointer ml-1"></i>`;
+            chip.querySelector('i').addEventListener('click', onRemove);
+            return chip;
+        }
+
+        // CAMBIAR COLOR EN TARJETA
+        window.changeCardColor = function(prodId, colorName, colorHex, colorImg) {
+            const imgEl = document.getElementById(`card-img-${prodId}`);
+            const labelEl = document.getElementById(`color-label-${prodId}`);
+            if (imgEl && colorImg) imgEl.src = colorImg;
+            if (labelEl) labelEl.innerText = colorName;
+        };
+
+        // APERTURA DE PDP FULLSCREEN CON DETALLES EXPANDIDOS Y RECOMENDADOS ESTILO SHEIN
+        window.openPDP = function(id) {
+            const product = state.products.find(p => p.id === id);
+            if (!product) return;
+
+            if (!state.recentlyViewed.includes(id)) {
+                state.recentlyViewed.unshift(id);
+                if (state.recentlyViewed.length > 4) state.recentlyViewed.pop();
+                saveState();
+                renderRecentlyViewed();
+            }
+
+            const modal = document.getElementById('pdp-modal');
+            const container = document.getElementById('pdp-container');
+            const content = document.getElementById('pdp-content');
+            const recomGrid = document.getElementById('pdp-recommendations-grid');
+
+            if (!modal || !content) return;
+
+            let currentSelectedColor = product.primaryColor.name;
+            let currentSelectedSize = product.sizes[0];
+
+            content.innerHTML = `
+                <div class="space-y-4">
+                    <div class="rounded-2xl overflow-hidden bg-royd-surface h-80 md:h-[420px] relative border border-royd-gray/30 shadow-inner">
+                        <img id="pdp-main-img" src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-opacity duration-300">
+                        <span class="absolute top-4 left-4 bg-royd-red text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase font-mono tracking-wider shadow">ROYD HEAVYWEIGHT</span>
+                    </div>
+                </div>
+
+                <div class="space-y-5 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-royd-red font-mono text-xs font-bold uppercase tracking-wider">${product.category} // ${product.style}</span>
+                            <span class="bg-emerald-500/10 text-emerald-400 text-[10px] font-mono px-2 py-0.5 rounded border border-emerald-500/30">En Stock</span>
+                        </div>
+                        <h3 class="font-syne font-extrabold text-white text-2xl md:text-3xl uppercase leading-tight">${product.name}</h3>
+                        <div class="flex items-center space-x-3">
+                            <span class="font-mono text-3xl font-black text-white">${formatPrice(product.price)}</span>
+                            <span class="text-xs text-royd-gray font-mono">IVA incluido</span>
+                        </div>
+                        <p class="text-xs md:text-sm text-royd-gray leading-relaxed font-normal">${product.description}</p>
+                    </div>
+
+                    <!-- Selector de Color -->
+                    <div class="space-y-2 border-t border-royd-gray/20 pt-4">
+                        <div class="flex justify-between text-xs font-mono">
+                            <span class="text-royd-gray font-bold uppercase">Color Seleccionado:</span>
+                            <span id="pdp-color-name-label" class="text-white font-extrabold">${product.primaryColor.name}</span>
+                        </div>
+                        <div class="flex items-center gap-2 flex-wrap">
+                            ${product.colorVariants.map((col, idx) => `
+                                <button 
+                                    data-color-name="${col.name}"
+                                    data-color-img="${col.image}"
+                                    class="btn-pdp-color-swatch flex items-center space-x-2 px-3 py-1.5 rounded-xl border ${idx === 0 ? 'border-royd-red bg-royd-red/20 text-white' : 'border-royd-gray/30 bg-royd-surface text-royd-gray'} transition-all cursor-pointer">
+                                    <span class="w-3.5 h-3.5 rounded-full border border-white/20" style="background-color: ${col.hex};"></span>
+                                    <span class="text-xs font-mono font-semibold">${col.name}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Selector de Talla -->
+                    <div class="space-y-2 border-t border-royd-gray/20 pt-3">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs font-mono font-bold text-white uppercase">Selecciona tu Talla:</label>
+                            <button onclick="document.getElementById('btn-open-size-chart').click()" class="text-[11px] text-royd-red hover:underline font-mono">Ver Guía de Tallas</button>
+                        </div>
+                        <div class="flex gap-2 flex-wrap" id="pdp-size-selector">
+                            ${product.sizes.map((sz, idx) => `
+                                <button data-size="${sz}" class="btn-pdp-size px-5 py-2.5 text-xs font-mono font-bold rounded-xl border ${idx === 0 ? 'bg-royd-red text-white border-royd-red' : 'bg-royd-surface text-royd-gray border-royd-gray/30'} hover:border-royd-red transition-all cursor-pointer">${sz}</button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- ESPECIFICACIONES TÉCNICAS EXPANDIDAS DEL PRODUCTO -->
+                    <div class="bg-royd-surface/80 p-4 rounded-2xl border border-royd-gray/30 space-y-2 text-xs font-mono">
+                        <h4 class="font-bold text-white uppercase tracking-wider text-[11px] text-royd-red mb-1">Especificaciones Técnicas:</h4>
+                        <ul class="space-y-1 text-royd-gray list-disc list-inside">
+                            <li><strong class="text-white">Materiales:</strong> ${product.materials}</li>
+                            <li><strong class="text-white">Corte & Caída:</strong> ${product.fit}</li>
+                            ${product.specs ? product.specs.map(spec => `<li>${spec}</li>`).join('') : ''}
+                        </ul>
+                    </div>
+
+                    <div class="pt-2">
+                        <button id="btn-pdp-add-cart" class="w-full bg-royd-red hover:bg-royd-darkred text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center space-x-2 cursor-pointer shadow-xl shadow-royd-red/30 uppercase tracking-wider text-sm">
+                            <i class="fa-solid fa-cart-plus text-base"></i>
+                            <span>Añadir al Carrito</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // RENDERIZAR RECOMENDADOS ESTILO SHEIN ("Podría gustarte esto")
+            if (recomGrid) {
+                const recommendedProducts = state.products.filter(p => p.id !== product.id);
+                recomGrid.innerHTML = recommendedProducts.map(rec => `
+                    <div onclick="window.openPDP('${rec.id}')" class="bg-royd-surface p-2 rounded-xl border border-royd-gray/30 cursor-pointer hover:border-royd-red transition-all group flex flex-col justify-between">
+                        <div class="h-32 rounded-lg overflow-hidden bg-royd-dark mb-2">
+                            <img src="${rec.image}" alt="${rec.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div>
+                            <p class="font-syne font-bold text-white text-xs truncate group-hover:text-royd-red transition-colors">${rec.name}</p>
+                            <p class="font-mono text-royd-red text-xs font-bold mt-1">${formatPrice(rec.price)}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // LISTENERS DE COLOR EN PDP
+            document.querySelectorAll('.btn-pdp-color-swatch').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.btn-pdp-color-swatch').forEach(b => {
+                        b.classList.remove('border-royd-red', 'bg-royd-red/20', 'text-white');
+                        b.classList.add('border-royd-gray/30', 'bg-royd-surface', 'text-royd-gray');
+                    });
+                    const target = e.currentTarget;
+                    target.classList.add('border-royd-red', 'bg-royd-red/20', 'text-white');
+                    target.classList.remove('border-royd-gray/30', 'bg-royd-surface', 'text-royd-gray');
+                    
+                    currentSelectedColor = target.getAttribute('data-color-name');
+                    document.getElementById('pdp-color-name-label').innerText = currentSelectedColor;
+                    
+                    const newImg = target.getAttribute('data-color-img');
+                    if (newImg) document.getElementById('pdp-main-img').src = newImg;
+                });
+            });
+
+            // LISTENERS DE TALLA EN PDP
+            document.querySelectorAll('.btn-pdp-size').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.btn-pdp-size').forEach(b => {
+                        b.classList.remove('bg-royd-red', 'text-white', 'border-royd-red');
+                        b.classList.add('bg-royd-surface', 'text-royd-gray', 'border-royd-gray/30');
+                    });
+                    e.currentTarget.classList.add('bg-royd-red', 'text-white', 'border-royd-red');
+                    e.currentTarget.classList.remove('bg-royd-surface', 'text-royd-gray', 'border-royd-gray/30');
+                    currentSelectedSize = e.currentTarget.getAttribute('data-size');
+                });
+            });
+
+            // AÑADIR AL CARRITO CON TALLA Y COLOR SELECCIONADOS
+            document.getElementById('btn-pdp-add-cart').addEventListener('click', () => {
+                window.addToCartWithDetails(product.id, currentSelectedSize, currentSelectedColor);
+                window.closePDP();
+            });
+
+            document.body.classList.add('modal-open');
+            modal.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            if (container) container.classList.remove('scale-95');
+        };
+
+        window.closePDP = function() {
+            const modal = document.getElementById('pdp-modal');
+            const container = document.getElementById('pdp-container');
+            if (!modal) return;
+            if (container) container.classList.add('scale-95');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-open');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
+        // GESTIÓN DEL CARRITO CON VARIANTES COMPUESTAS (ID + TALLA + COLOR)
+        window.addToCartWithDetails = function(id, size, color) {
+            const product = state.products.find(p => p.id === id);
+            if (!product) return;
+
+            const cartItemId = `${id}-${size}-${color.replace(/\s+/g, '-').toLowerCase()}`;
+            const existing = state.cart.find(item => item.cartItemId === cartItemId);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                state.cart.push({
+                    cartItemId: cartItemId,
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    fit: product.fit,
+                    size: size,
+                    color: color,
+                    qty: 1
+                });
+            }
+
+            saveState();
+            window.updateCartUI();
+            window.showToast("Carrito ROYD", `Añadido "${product.name}" (${color} / ${size})`, "fa-solid fa-cart-plus text-royd-red");
+            window.openCart();
+        };
+
+        window.updateCartQty = function(cartItemId, delta) {
+            const item = state.cart.find(i => i.cartItemId === cartItemId);
+            if (!item) return;
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                state.cart = state.cart.filter(i => i.cartItemId !== cartItemId);
+            }
+
+            saveState();
+            window.updateCartUI();
+        };
+
+        // ACTUALIZACIÓN DE INTERFAZ DEL CARRITO
+        window.updateCartUI = function() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge-count');
+            const totalDisplay = document.getElementById('cart-total-display');
+            const freeShipBar = document.getElementById('free-shipping-bar');
+            const freeShipVal = document.getElementById('free-shipping-val');
+            
+            const totalItems = state.cart.reduce((acc, i) => acc + i.qty, 0);
+            const totalPriceUSD = state.cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+
+            if (badge) badge.innerText = totalItems;
+            if (totalDisplay) totalDisplay.innerText = formatPrice(totalPriceUSD);
+
+            const shipPercent = Math.min(100, (totalPriceUSD / 60) * 100);
+            if (freeShipBar) freeShipBar.style.width = `${shipPercent}%`;
+            if (freeShipVal) freeShipVal.innerText = `$${totalPriceUSD.toFixed(0)} / $60 USD`;
+
+            if (container) {
+                if (state.cart.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-12 text-royd-gray space-y-2">
+                            <i class="fa-solid fa-bag-shopping text-3xl"></i>
+                            <p class="text-sm font-semibold">Tu carrito está vacío</p>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = state.cart.map(i => `
+                        <div class="flex items-center justify-between bg-royd-surface p-3 rounded-xl border border-royd-gray/20">
+                            <div class="flex items-center space-x-3">
+                                <img src="${i.image}" class="w-12 h-12 object-cover rounded-lg" />
+                                <div>
+                                    <h4 class="text-xs font-bold text-white truncate max-w-[140px]">${i.name}</h4>
+                                    <div class="flex items-center space-x-2 text-[10px] font-mono text-royd-gray">
+                                        <span class="bg-royd-red/20 text-royd-red px-1.5 py-0.5 rounded font-bold">${i.color} / ${i.size}</span>
+                                        <span>${formatPrice(i.price)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="window.updateCartQty('${i.cartItemId}', -1)" class="w-6 h-6 rounded bg-royd-card border border-royd-gray/30 text-white flex items-center justify-center text-xs hover:border-royd-red">-</button>
+                                <span class="text-xs font-mono font-bold text-white">${i.qty}</span>
+                                <button onclick="window.updateCartQty('${i.cartItemId}', 1)" class="w-6 h-6 rounded bg-royd-card border border-royd-gray/30 text-white flex items-center justify-center text-xs hover:border-royd-red">+</button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+        };
+
+        window.openCart = function() {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-drawer-panel');
+            if (!drawer || !panel) return;
+            document.body.classList.add('modal-open');
+            drawer.classList.remove('pointer-events-none', 'opacity-0');
+            panel.classList.remove('translate-x-full');
+        };
+
+        window.closeCart = function() {
+            const drawer = document.getElementById('cart-drawer');
+            const panel = document.getElementById('cart-drawer-panel');
+            if (!drawer || !panel) return;
+            drawer.classList.add('pointer-events-none', 'opacity-0');
+            panel.classList.add('translate-x-full');
+            document.body.classList.remove('modal-open');
+        };
+
+        window.toggleWishlist = function(id) {
+            const idx = state.wishlist.indexOf(id);
+            if (idx > -1) {
+                state.wishlist.splice(idx, 1);
+                window.showToast("Favoritos", "Prenda removida de tus favoritos", "fa-solid fa-heart-crack text-royd-red");
+            } else {
+                state.wishlist.push(id);
+                window.showToast("Favoritos", "Prenda guardada en tus favoritos", "fa-solid fa-heart text-royd-red");
+            }
+            saveState();
+            const count = document.getElementById('wishlist-badge-count');
+            if (count) count.innerText = state.wishlist.length;
+            renderProducts();
+        };
+
+        window.resetFilters = function() {
+            state.filters = { category: 'all', style: 'all', gender: 'all', age: 'all' };
+            state.searchQuery = '';
+            state.selectedSizeFilter = 'all';
+            state.selectedSort = 'featured';
+            state.priceLimit = 100;
+            document.getElementById('size-filter').value = 'all';
+            document.getElementById('sort-select').value = 'featured';
+            document.getElementById('price-slider').value = 100;
+            document.getElementById('price-limit-val').innerText = '100';
+            renderProducts();
+        };
+
+        function renderRecentlyViewed() {
+            const section = document.getElementById('recently-viewed-section');
+            const grid = document.getElementById('recently-viewed-grid');
+            if (!section || !grid || state.recentlyViewed.length === 0) return;
+
+            const items = state.recentlyViewed.map(id => state.products.find(p => p.id === id)).filter(Boolean);
+            grid.innerHTML = items.map(p => `
+                <div onclick="window.openPDP('${p.id}')" class="bg-royd-surface p-2 rounded-xl border border-royd-gray/20 cursor-pointer hover:border-royd-red transition-all flex items-center space-x-2">
+                    <img src="${p.image}" class="w-10 h-10 object-cover rounded-lg">
+                    <div class="truncate text-[10px]">
+                        <p class="font-bold text-white truncate">${p.name}</p>
+                        <p class="font-mono text-royd-red">${formatPrice(p.price)}</p>
+                    </div>
+                </div>
+            `).join('');
+            section.classList.remove('hidden');
+        }
+
+        // EVENT LISTENERS AL CARGAR EL DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            window.updateCartUI();
+            renderRecentlyViewed();
+            initSocialProof();
+
+            // Sincronización multi-pestaña
+            window.addEventListener('storage', (e) => {
+                if (['royd_cart', 'royd_wishlist'].includes(e.key)) {
+                    state.cart = JSON.parse(localStorage.getItem('royd_cart')) || [];
+                    state.wishlist = JSON.parse(localStorage.getItem('royd_wishlist')) || [];
+                    window.updateCartUI();
+                    renderProducts();
+                }
+            });
+
+            // Tecla ESC para cerrar modales
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    window.closePDP();
+                    window.closeCart();
+                    document.getElementById('size-chart-modal')?.classList.add('hidden');
+                }
+            });
+
+            // Multi-Moneda
+            document.getElementById('currency-select')?.addEventListener('change', (e) => {
+                state.currency = e.target.value;
+                renderProducts();
+                window.updateCartUI();
+                renderRecentlyViewed();
+            });
+
+            // Búsqueda en tiempo real con Debounce
+            const searchInput = document.getElementById('search-input');
+            const handleSearch = debounce((e) => {
+                state.searchQuery = e.target.value;
+                if (state.searchQuery.trim() !== '' && !state.recentSearches.includes(state.searchQuery)) {
+                    state.recentSearches.unshift(state.searchQuery);
+                    if (state.recentSearches.length > 5) state.recentSearches.pop();
+                    saveState();
+                }
+                renderProducts();
+            }, 300);
+
+            searchInput?.addEventListener('input', handleSearch);
+            document.getElementById('search-input-mobile')?.addEventListener('input', handleSearch);
+
+            // Filtros de Talla, Ordenamiento y Slider de Precio
+            document.getElementById('size-filter')?.addEventListener('change', (e) => {
+                state.selectedSizeFilter = e.target.value;
+                renderProducts();
+            });
+
+            document.getElementById('sort-select')?.addEventListener('change', (e) => {
+                state.selectedSort = e.target.value;
+                renderProducts();
+            });
+
+            document.getElementById('price-slider')?.addEventListener('input', (e) => {
+                state.priceLimit = parseFloat(e.target.value);
+                document.getElementById('price-limit-val').innerText = e.target.value;
+                renderProducts();
+            });
+
+            // Modales PDP y Cart Listeners
+            document.getElementById('btn-close-pdp')?.addEventListener('click', window.closePDP);
+            document.getElementById('pdp-overlay')?.addEventListener('click', window.closePDP);
+            document.getElementById('btn-open-cart')?.addEventListener('click', window.openCart);
+            document.getElementById('btn-close-cart')?.addEventListener('click', window.closeCart);
+            document.getElementById('cart-overlay')?.addEventListener('click', window.closeCart);
+
+            // Guía de Tallas Modal
+            document.getElementById('btn-open-size-chart')?.addEventListener('click', () => {
+                const modal = document.getElementById('size-chart-modal');
+                if (modal) {
+                    modal.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+                }
+            });
+            document.getElementById('btn-close-size-chart')?.addEventListener('click', () => {
+                document.getElementById('size-chart-modal')?.classList.add('hidden');
+            });
+            document.getElementById('size-chart-overlay')?.addEventListener('click', () => {
+                document.getElementById('size-chart-modal')?.classList.add('hidden');
+            });
+
+            // Fit Finder Calculator
+            document.getElementById('btn-calculate-fit')?.addEventListener('click', () => {
+                const h = parseFloat(document.getElementById('fit-height').value);
+                const w = parseFloat(document.getElementById('fit-weight').value);
+                const res = document.getElementById('fit-result');
+
+                if (!h || !w || !res) return;
+                let suggested = 'M';
+                if (h > 180 || w > 80) suggested = 'L';
+                if (h > 188 || w > 92) suggested = 'XL';
+                if (h < 170 && w < 65) suggested = 'S';
+
+                res.innerText = `💡 Tu talla recomendada es: ${suggested} (Oversized Fit)`;
+                res.classList.remove('hidden');
+            });
+
+            // Checkout por WhatsApp estructurado
+            document.getElementById('btn-checkout-whatsapp')?.addEventListener('click', () => {
+                if (state.cart.length === 0) {
+                    window.showToast("Atención", "Tu carrito está vacío.", "fa-solid fa-triangle-exclamation text-amber-500");
+                    return;
+                }
+
+                const payment = document.getElementById('cart-payment-method').value;
+                const shipping = document.getElementById('cart-shipping-method').value;
+
+                let message = "¡Hola ROYD! 👋 Quisiera procesar la compra de mi carrito:\n\n";
+                state.cart.forEach((item, index) => {
+                    message += `${index + 1}. *${item.name}*\n   - Color: ${item.color}\n   - Talla: ${item.size}\n   - Cantidad: ${item.qty}\n   - Precio: $${item.price}.00 USD\n\n`;
+                });
+
+                const totalUSD = state.cart.reduce((acc, i) => acc + (i.price * i.qty), 0);
+                message += `💳 *MÉTODO DE PAGO:* ${payment}\n`;
+                message += `🚚 *ENVÍO PREFERIDO:* ${shipping}\n`;
+                message += `💰 *TOTAL A PAGAR:* ${formatPrice(totalUSD)}\n\n¿Podrían facilitarme las instrucciones para concretar el pago?`;
+                
+                const targetUrl = `https://wa.me/584147420458?text=${encodeURIComponent(message)}`;
+                window.open(targetUrl, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
